@@ -19,7 +19,7 @@ console.log(Astro.url.pathname)
 		<title>{title}</title>
 	</head>
 	<body class="m-0 w-full h-full bg-gray-900 text-gray-100">
-		<nav class="bg-gray-800/80 backdrop-blur-sm shadow-lg border-b border-gray-700">
+		<nav class="bg-gray-900/95 backdrop-blur-sm shadow-lg border-b border-gray-800">
 			<div class="max-w-7xl mx-auto px-4">
 				<div class="flex justify-between h-16">
 					<div class="flex space-x-4 items-center">
@@ -27,15 +27,15 @@ console.log(Astro.url.pathname)
 							<a href="/wtec"
 							   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
 									 ${currentPath === '/wtec/'
-									   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
-									   : 'text-gray-300 hover:text-white hover:bg-gray-700'}`}>
+									   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+									   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
 								Schedule
 							</a>
 							<a href="/wtec/standings"
 							   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
 									 ${currentPath === '/wtec/standings'
-									   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
-									   : 'text-gray-300 hover:text-white hover:bg-gray-700'}`}>
+									   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+									   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
 								Standings
 							</a>
 						</div>
