@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import background from '../assets/background.svg';
+---
+
+<Layout title="Season 13 - Standings">
+    <div class="min-h-screen font-sans">
+        <img class="fixed top-0 left-0 w-full h-full -z-10 blur-[100px] opacity-30" src={background.src} alt="" fetchpriority="high" />
+        <main class="min-h-screen flex justify-center items-center p-4">
+            <div class="w-full max-w-2xl bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-gray-700">
+                <div class="p-6">
+                    <h1 class="text-3xl font-bold mb-4 text-center bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Season 13 Standings</h1>
+                    <div class="text-sm text-gray-400 text-center mb-6">After Round 2</div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="bg-gray-700/50">
+                                    <th class="px-4 py-3 border-b border-gray-600 text-purple-300">#</th>
+                                    <th class="px-4 py-3 border-b border-gray-600 text-purple-300">Driver</th>
+                                    <th class="px-4 py-3 border-b border-gray-600 text-purple-300">Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-gradient-to-r from-gray-700/30 to-transparent hover:from-gray-700/50">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-yellow-500 font-bold">1</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 font-semibold">Ian Joyner</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-yellow-500 font-bold">70</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-slate-300 font-bold">2</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Alex Williams8</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-slate-300 font-bold">65</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-orange-400 font-bold">3</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Adam S Robinson</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-orange-400 font-bold">55</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">4</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Michael Coomber</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">50</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">5</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Luke Grundmann</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">44</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">6</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Bevan Thomson</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">44</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">7</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Richard Harwood</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">39</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">8</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Harry Pickard2</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">33</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">9</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Ernie Ketton</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">30</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">10</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Matt Williams7</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">27</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">11</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Thomas Barczak</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">20</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">12</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Karl McGuin</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">10</td>
+                                </tr>
+                                <tr class="hover:bg-gray-700/30">
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">13</td>
+                                    <td class="px-4 py-3 border-b border-gray-600">Alistair Murray</td>
+                                    <td class="px-4 py-3 border-b border-gray-600 text-gray-400 font-bold">4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</Layout>
