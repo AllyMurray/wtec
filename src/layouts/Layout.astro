@@ -1,4 +1,6 @@
 ---
+import league from '../data/league.json';
+
 interface Props {
 	title?: string;
 }
@@ -12,6 +14,7 @@ const normalizedPath = currentPath.endsWith('/') ? currentPath.slice(0, -1) : cu
 const normalizedBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
 const isSchedulePage = normalizedPath === normalizedBasePath;
 const isStandingsPage = normalizedPath === `${normalizedBasePath}/standings`;
+const isDriversPage = normalizedPath === `${normalizedBasePath}/drivers`;
 ---
 
 <!doctype html>
@@ -26,23 +29,35 @@ const isStandingsPage = normalizedPath === `${normalizedBasePath}/standings`;
 	<body class="m-0 w-full h-full bg-gray-900 text-gray-100">
 		<nav class="bg-gray-900/95 backdrop-blur-sm shadow-lg border-b border-gray-800">
 			<div class="max-w-7xl mx-auto px-4">
-				<div class="flex justify-between h-16">
-					<div class="flex space-x-4 items-center">
-						<div class="flex space-x-8">
-							<a href={basePath}
-							   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
-									 ${isSchedulePage
-									   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
-									   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
-								Schedule
-							</a>
-							<a href={`${basePath}/standings`}
-							   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
-									 ${isStandingsPage
-									   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
-									   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
-								Standings
-							</a>
+				<div class="flex flex-col py-2">
+					<h1 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
+						{league.league_name}
+					</h1>
+					<div class="flex justify-between h-16">
+						<div class="flex space-x-4 items-center">
+							<div class="flex space-x-8">
+								<a href={basePath}
+								   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
+										 ${isSchedulePage
+										   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+										   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
+									Schedule
+								</a>
+								<a href={`${basePath}/standings`}
+								   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
+										 ${isStandingsPage
+										   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+										   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
+									Standings
+								</a>
+								<a href={`${basePath}/drivers`}
+								   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
+										 ${isDriversPage
+										   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+										   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
+									Drivers
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>

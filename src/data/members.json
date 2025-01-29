@@ -1,0 +1,332 @@
+
+{
+  "success": true,
+  "cust_ids": [
+    234679,
+    479509,
+    524991,
+    534062,
+    534219,
+    546790,
+    554947,
+    567276,
+    599890,
+    606006,
+    68662,
+    701628,
+    724067,
+    749272,
+    754213,
+    769198,
+    810929,
+    926270
+  ],
+  "members": [
+    {
+      "cust_id": 534219,
+      "display_name": "Michael Coomber",
+      "helmet": {
+        "pattern": 22,
+        "color1": "ee1302",
+        "color2": "ccff00",
+        "color3": "0578ff",
+        "face_type": 4,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-23T21:03:24.298115638Z",
+      "member_since": "2020-07-05",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 567276,
+      "display_name": "Luke Grundmann",
+      "helmet": {
+        "pattern": 36,
+        "color1": "000000",
+        "color2": "ffffff",
+        "color3": "4f4f4f",
+        "face_type": 4,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T18:04:42.998444671Z",
+      "member_since": "2020-11-02",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 769198,
+      "display_name": "Matt Williams7",
+      "helmet": {
+        "pattern": 63,
+        "color1": "ffffff",
+        "color2": "ffffff",
+        "color3": "ee7c06",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T19:13:00.913272669Z",
+      "member_since": "2022-04-17",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 534062,
+      "display_name": "Ian Joyner",
+      "helmet": {
+        "pattern": 1,
+        "color1": "0b63d9",
+        "color2": "ffffff",
+        "color3": "ffffff",
+        "face_type": 8,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T12:29:03.075160723Z",
+      "member_since": "2020-07-05",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 724067,
+      "display_name": "Thomas Barczak",
+      "helmet": {
+        "pattern": 5,
+        "color1": "ffffff",
+        "color2": "fc0706",
+        "color3": "111111",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T19:38:44.280665578Z",
+      "member_since": "2021-12-30",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 554947,
+      "display_name": "Oli Pimley",
+      "helmet": {
+        "pattern": 31,
+        "color1": "fcae00",
+        "color2": "000000",
+        "color3": "000000",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T16:30:02Z",
+      "member_since": "2020-09-17",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 546790,
+      "display_name": "Keith Dalton",
+      "helmet": {
+        "pattern": 22,
+        "color1": "f28607",
+        "color2": "f9f1f1",
+        "color3": "ffffff",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T18:17:25.22118909Z",
+      "member_since": "2020-08-18",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 754213,
+      "display_name": "Harry Pickard2",
+      "helmet": {
+        "pattern": 3,
+        "color1": "0019ff",
+        "color2": "ffffff",
+        "color3": "ff0000",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T19:25:38.704219745Z",
+      "member_since": "2022-03-13",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 926270,
+      "display_name": "Alistair Murray",
+      "helmet": {
+        "pattern": 1,
+        "color1": "00aeef",
+        "color2": "f26522",
+        "color3": "0a0a0a",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-28T13:06:06.030650434Z",
+      "member_since": "2023-07-31",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 479509,
+      "display_name": "Marcus Adams3",
+      "helmet": {
+        "pattern": 28,
+        "color1": "60a4c3",
+        "color2": "111010",
+        "color3": "f0ec6d",
+        "face_type": 4,
+        "helmet_type": 0
+      },
+      "last_login": "2024-08-20T22:42:59.242785913Z",
+      "member_since": "2020-04-14",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 749272,
+      "display_name": "Bevan Thomson",
+      "helmet": {
+        "pattern": 37,
+        "color1": "ff4747",
+        "color2": "001e6b",
+        "color3": "ffffff",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-27T21:37:55.459392744Z",
+      "member_since": "2022-03-02",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 234679,
+      "display_name": "Adam S Robinson",
+      "helmet": {
+        "pattern": 28,
+        "color1": "000000",
+        "color2": "ff0000",
+        "color3": "000000",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-23T12:58:04.138694595Z",
+      "member_since": "2016-05-16",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 701628,
+      "display_name": "Michael Paffett",
+      "helmet": {
+        "pattern": 20,
+        "color1": "faff00",
+        "color2": "ff0000",
+        "color3": "8000ff",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2023-05-18T19:40:29Z",
+      "member_since": "2021-11-27",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 524991,
+      "display_name": "Richard Harwood",
+      "helmet": {
+        "pattern": 63,
+        "color1": "000000",
+        "color2": "ff1700",
+        "color3": "ffffff",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-27T19:41:55Z",
+      "member_since": "2020-06-14",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 68662,
+      "display_name": "Karl McGuirk",
+      "helmet": {
+        "pattern": 67,
+        "color1": "000000",
+        "color2": "f34600",
+        "color3": "f34600",
+        "face_type": 11,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-27T19:48:26.998029577Z",
+      "member_since": "2011-05-15",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 599890,
+      "display_name": "Alex Williams8",
+      "helmet": {
+        "pattern": 41,
+        "color1": "ffffff",
+        "color2": "000000",
+        "color3": "0500f0",
+        "face_type": 5,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-26T15:33:28Z",
+      "member_since": "2021-01-28",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 810929,
+      "display_name": "Ernie Jettson",
+      "helmet": {
+        "pattern": 22,
+        "color1": "57a1ae",
+        "color2": "ef9fff",
+        "color3": "ffffff",
+        "face_type": 0,
+        "helmet_type": 0
+      },
+      "last_login": "2025-01-23T19:11:12.707539021Z",
+      "member_since": "2022-08-08",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    },
+    {
+      "cust_id": 606006,
+      "display_name": "Jomi Scott",
+      "helmet": {
+        "pattern": 22,
+        "color1": "000000",
+        "color2": "ffffff",
+        "color3": "f57a31",
+        "face_type": 8,
+        "helmet_type": 0
+      },
+      "last_login": "2024-11-14T11:45:13.030205915Z",
+      "member_since": "2021-02-12",
+      "club_id": 36,
+      "club_name": "UK and I",
+      "ai": false
+    }
+  ]
+}
