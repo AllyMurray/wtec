@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { League } from '../src/schemas/league';
 import { z } from 'zod';
+import { LeagueSeasons } from '../src/schemas/league-seasons';
 
 if (!process.env.EMAIL || !process.env.PASSWORD) {
   throw new Error('Missing required environment variables EMAIL and/or PASSWORD');
@@ -46,21 +47,29 @@ async function fetchAndSaveLeagueData() {
   }
 }
 
-async function fetchAndSaveSeasonData() {
+async function fetchAndSaveLeagueSeasons() {
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/seasons', {
-      league_id: wtecLeagueId
+      league_id: wtecLeagueId,
+      include_licenses: false
     });
-    await saveDataToFile(rawData, 'league-seasons.json');
+
+    // Validate the data against our schema
+    const validatedData = LeagueSeasons.parse(rawData);
+    await saveDataToFile(validatedData, 'league-seasons.json');
   } catch (error) {
-    console.error('Error fetching season data:', error);
+    if (error instanceof z.ZodError) {
+      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
+    } else {
+      console.error('Error:', error);
+    }
     process.exit(1);
   }
 }
 
 async function fetchAllData() {
   await fetchAndSaveLeagueData();
-  await fetchAndSaveSeasonData();
+  await fetchAndSaveLeagueSeasons();
 }
 
-fetchAllData();
+fetchAllData().catch(console.error);
