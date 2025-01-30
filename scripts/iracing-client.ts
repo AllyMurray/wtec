@@ -1,9 +1,3 @@
-
-interface AuthCredentials {
-  email: string;
-  password: string;
-}
-
 interface AuthResponse {
   authcode: string;
   autoLoginSeries: null | string;
@@ -100,8 +94,6 @@ export class IRacingClient {
       'irsso_membersv2': authData.ssoCookieValue,
       'authtoken_members': `%7B%22authtoken%22%3A%7B%22authcode%22%3A%22${authData.authcode}%22%2C%22email%22%3A%22${encodeURIComponent(authData.email)}%22%7D%7D`
     };
-
-    console.log("🚀 ~ IRacingClient ~ auth response:", authData);
   }
 
   async makeAuthorizedRequest<T = any>(
@@ -123,8 +115,6 @@ export class IRacingClient {
       .join('; ');
 
     headers.set('Cookie', cookieString);
-
-    console.log("🚀 ~ IRacingClient ~ cookieString:", cookieString);
 
     const response = await fetch(this.buildUrl(endpoint, params), {
       ...options,
