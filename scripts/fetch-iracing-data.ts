@@ -15,7 +15,18 @@ const client = new IRacingClient({
 
 const wtecLeagueId = '7058';
 
-async function fetchAndSaveData() {
+async function saveDataToFile(data: unknown, filename: string) {
+  const dirPath = path.join(process.cwd(), 'src', 'data');
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+
+  const filePath = path.join(dirPath, filename);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  console.log(`Data successfully written to ${filePath}`);
+}
+
+async function fetchAndSaveLeagueData() {
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/get', {
       league_id: wtecLeagueId,
@@ -24,18 +35,7 @@ async function fetchAndSaveData() {
 
     // Validate the data against our schema
     const validatedData = League.parse(rawData);
-
-    // Create directory if it doesn't exist
-    const dirPath = path.join(process.cwd(), 'src', 'data');
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
-
-    // Write validated data to JSON file
-    const filePath = path.join(dirPath, 'league.json');
-    fs.writeFileSync(filePath, JSON.stringify(validatedData, null, 2));
-
-    console.log(`Data successfully written to ${filePath}`);
+    await saveDataToFile(validatedData, 'league.json');
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
@@ -46,4 +46,21 @@ async function fetchAndSaveData() {
   }
 }
 
-fetchAndSaveData();
+async function fetchAndSaveSeasonData() {
+  try {
+    const rawData = await client.makeAuthorizedRequest('/data/league/seasons', {
+      league_id: wtecLeagueId
+    });
+    await saveDataToFile(rawData, 'league-seasons.json');
+  } catch (error) {
+    console.error('Error fetching season data:', error);
+    process.exit(1);
+  }
+}
+
+async function fetchAllData() {
+  await fetchAndSaveLeagueData();
+  await fetchAndSaveSeasonData();
+}
+
+fetchAllData();
