@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   );
   return sessions
     .filter(session => {
-      const date = DateTime.fromISO(session.launch_at);
+      const date = DateTime.fromISO(session.launch_at).setZone('Europe/London');
       return (
         date < DateTime.now() &&
         date.weekday === 4 && // Thursday

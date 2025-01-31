@@ -18,7 +18,7 @@ function getTrackInactiveUrl(trackId: number) {
 // Sort sessions by date
 const sortedSessions = [...sessions]
   .filter(session => {
-    const date = DateTime.fromISO(session.launch_at);
+    const date = DateTime.fromISO(session.launch_at).setZone('Europe/London'); // Convert UTC to London time
     return date.weekday === 4 && date.hour === 19 && date.minute === 0;
   })
   .sort(
