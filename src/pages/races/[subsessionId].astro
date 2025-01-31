@@ -45,15 +45,15 @@ function formatTime(time: number) {
 
     <div class="bg-gray-800 rounded-lg p-6">
       <div class="border-b border-gray-700 mb-6">
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-2 -mb-px">
           {
             [...raceResults.session_results]
               .filter(r => !['WARMUP', 'PRACTICE'].includes(r.simsession_name))
               .reverse()
               .map((session, index) => (
                 <button
-                  class="px-3 py-1.5 -mb-px border-b-2 transition-colors text-sm sm:text-base sm:px-4 sm:py-2"
                   class:list={[
+                    'px-3 py-1.5 border-b-2 transition-colors text-sm sm:text-base sm:px-4 sm:py-2',
                     index === 0
                       ? 'border-blue-500 text-white'
                       : 'border-transparent text-gray-400 hover:text-white',
