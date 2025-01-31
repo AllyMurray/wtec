@@ -1,6 +1,7 @@
 ---
 import trackAssets from '../data/track-assets.json';
 import type { LeagueSeasonSession } from '../schemas/league-season-sessions';
+import { DateTime } from 'luxon';
 
 interface Props {
   sessions: LeagueSeasonSession[];
@@ -15,30 +16,39 @@ function getTrackInactiveUrl(trackId: number) {
 }
 
 // Sort sessions by date
-const sortedSessions = [...sessions].sort((a, b) =>
-  new Date(a.launch_at).getTime() - new Date(b.launch_at).getTime()
-);
+const sortedSessions = [...sessions]
+  .filter(session => {
+    const date = DateTime.fromISO(session.launch_at);
+    return date.weekday === 4 && date.hour === 19 && date.minute === 0;
+  })
+  .sort(
+    (a, b) => new Date(a.launch_at).getTime() - new Date(b.launch_at).getTime()
+  );
 
 // Split into past and upcoming races
-const now = new Date();
+const now = DateTime.now();
 const pastSessions = sortedSessions
-  .filter(s => new Date(s.launch_at) < now)
-  .sort((a, b) => new Date(b.launch_at).getTime() - new Date(a.launch_at).getTime());
+  .filter(s => DateTime.fromISO(s.launch_at) < now)
+  .sort(
+    (a, b) => new Date(b.launch_at).getTime() - new Date(a.launch_at).getTime()
+  );
 
-const upcomingSessions = sortedSessions.filter(s => new Date(s.launch_at) >= now);
+const upcomingSessions = sortedSessions.filter(
+  s => DateTime.fromISO(s.launch_at) >= now
+);
 
 function formatDate(date: Date) {
   return date.toLocaleDateString('en-GB', {
     day: 'numeric',
     month: 'short',
-    year: 'numeric'
+    year: 'numeric',
   });
 }
 
 function formatTime(date: Date) {
   return date.toLocaleTimeString('en-GB', {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
   });
 }
 
@@ -51,60 +61,84 @@ function getTrackMapUrl(trackId: number) {
   <section>
     <h2 class="text-2xl font-bold mb-4">Upcoming Races</h2>
     <div class="space-y-4">
-      {upcomingSessions.map(session => (
-        <div class="bg-gray-800 p-4 rounded-lg">
-          <div class="flex justify-between">
-            <div class="flex items-center gap-4">
-              <div class="w-64">
-                <h3 class="text-xl font-semibold">{session.track.track_name}</h3>
-                {session.track.config_name && (
-                  <p class="text-gray-400">{session.track.config_name}</p>
-                )}
+      {
+        upcomingSessions.map(session => (
+          <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="flex justify-between">
+              <div class="flex items-center gap-4">
+                <div class="w-64">
+                  <h3 class="text-xl font-semibold">
+                    {session.track.track_name}
+                  </h3>
+                  {session.track.config_name && (
+                    <p class="text-gray-400">{session.track.config_name}</p>
+                  )}
+                </div>
+                <img
+                  src={getTrackInactiveUrl(session.track.track_id)}
+                  alt={`${session.track.track_name} track map`}
+                  class="w-32 h-32 object-contain"
+                />
               </div>
-              <img
-                src={getTrackInactiveUrl(session.track.track_id)}
-                alt={`${session.track.track_name} track map`}
-                class="w-32 h-32 object-contain"
-              />
-            </div>
-            <div class="text-right">
-              <p class="text-lg">{formatDate(new Date(session.launch_at))}</p>
-              <p class="text-gray-400">{formatTime(new Date(session.launch_at))}</p>
+              <div class="text-right">
+                <p class="text-lg">{formatDate(new Date(session.launch_at))}</p>
+                <p class="text-gray-400">
+                  {formatTime(new Date(session.launch_at))}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </section>
 
-  <section class="opacity-75">
+  <section>
     <h2 class="text-2xl font-bold mb-4 text-gray-400">Past Races</h2>
     <div class="space-y-4">
-      {pastSessions.map(session => (
-        <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
-          <div class="flex justify-between">
-            <div class="flex items-center gap-4">
-              <div class="w-64">
-                <h3 class="text-xl font-semibold">{session.track.track_name}</h3>
-                {session.track.config_name && (
-                  <p class="text-gray-400">{session.track.config_name}</p>
-                )}
+      {
+        pastSessions.map(session => (
+          <a
+            href={`/wtec/races/${session.subsession_id}`}
+            class="block bg-gray-800/50 p-4 rounded-lg border border-gray-700 hover:bg-gray-800/75 hover:border-gray-600 transition-all group"
+          >
+            <div class="flex justify-between">
+              <div class="flex items-center gap-4">
+                <div class="w-64">
+                  <h3 class="text-xl font-semibold group-hover:text-white transition-colors">
+                    {session.track.track_name}
+                  </h3>
+                  {session.track.config_name && (
+                    <p class="text-gray-400">{session.track.config_name}</p>
+                  )}
+                </div>
+                <img
+                  src={getTrackInactiveUrl(session.track.track_id)}
+                  alt={`${session.track.track_name} track map`}
+                  class="w-32 h-32 object-contain"
+                />
               </div>
-              <img
-                src={getTrackInactiveUrl(session.track.track_id)}
-                alt={`${session.track.track_name} track map`}
-                class="w-32 h-32 object-contain"
-              />
+              <div class="text-right flex flex-col items-end">
+                <p class="text-lg">{formatDate(new Date(session.launch_at))}</p>
+                <span class="inline-flex items-center gap-1 text-blue-400 group-hover:text-blue-300 transition-colors mt-1">
+                  View Results →
+                </span>
+              </div>
             </div>
-            <div class="text-right">
-              <p class="text-lg">{formatDate(new Date(session.launch_at))}</p>
-              {session.winner_name && (
-                <p class="text-green-400">Winner: {session.winner_name}</p>
-              )}
-            </div>
-          </div>
-        </div>
-      ))}
+          </a>
+        ))
+      }
     </div>
   </section>
 </div>
+
+<style>
+  .race-event h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .race-event h3 a:hover {
+    text-decoration: underline;
+  }
+</style>

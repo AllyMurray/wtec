@@ -1,0 +1,175 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { LeagueSeasonSessions } from '../../schemas/league-season-sessions';
+import { DateTime } from 'luxon';
+
+export async function getStaticPaths() {
+  const { sessions } = await LeagueSeasonSessions.parse(
+    await import('../../data/league-season-sessions.json')
+  );
+  return sessions
+    .filter(session => {
+      const date = DateTime.fromISO(session.launch_at);
+      return (
+        date < DateTime.now() &&
+        date.weekday === 4 && // Thursday
+        date.hour === 19 && // 19:00
+        date.minute === 0
+      );
+    })
+    .map(session => ({
+      params: { subsessionId: session.subsession_id.toString() },
+      props: {
+        session,
+        results: import.meta
+          .glob('/src/data/subsessions/*.json')
+          [`/src/data/subsessions/${session.subsession_id}.json`](),
+      },
+    }));
+}
+
+const { session, results } = Astro.props;
+const { default: raceResults } = await results;
+
+function formatTime(time: number) {
+  return (time / 10000).toFixed(3) + 's';
+}
+---
+
+<Layout title={`Race Results - ${session.track.track_name}`}>
+  <main class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-2">{session.track.track_name}</h1>
+    <p class="text-gray-400 mb-8">
+      {DateTime.fromISO(session.launch_at).toFormat('DDDD')}
+    </p>
+
+    <div class="bg-gray-800 rounded-lg p-6">
+      <div class="border-b border-gray-700 mb-6">
+        <div class="flex gap-4">
+          {
+            [...raceResults.session_results].reverse().map((session, index) => (
+              <button
+                class="px-4 py-2 -mb-px border-b-2 transition-colors"
+                class:list={[
+                  index === 0
+                    ? 'border-blue-500 text-white'
+                    : 'border-transparent text-gray-400 hover:text-white',
+                ]}
+                data-tab={index}
+              >
+                {session.simsession_name}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      {
+        [...raceResults.session_results]
+          .reverse()
+          .map((session, sessionIndex) => (
+            <div
+              class="tab-content"
+              data-tab={sessionIndex}
+              style={sessionIndex === 0 ? '' : 'display: none;'}
+            >
+              <table class="w-full">
+                <thead>
+                  <tr class="text-left border-b border-gray-700">
+                    <th class="pb-2">Pos</th>
+                    <th class="pb-2">Driver</th>
+                    <th class="pb-2 text-right">
+                      {session.simsession_type_name === 'Race'
+                        ? 'Gap'
+                        : 'Best Time'}
+                    </th>
+                    <th class="pb-2 text-right">Best Lap</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {session.results
+                    .sort((a, b) => {
+                      if (session.simsession_type_name === 'Race') {
+                        return a.finish_position - b.finish_position;
+                      }
+                      return (
+                        (a.best_lap_time || Infinity) -
+                        (b.best_lap_time || Infinity)
+                      );
+                    })
+                    .map((result, index) => (
+                      <tr class="border-b border-gray-700/50 text-gray-400">
+                        <td class="py-2">{index + 1}</td>
+                        <td class="py-2">{result.display_name}</td>
+                        <td class="py-2 text-right">
+                          {session.simsession_type_name === 'Race'
+                            ? index === 0
+                              ? 'Winner'
+                              : `+${formatTime(result.interval)}`
+                            : result.best_lap_time
+                              ? formatTime(result.best_lap_time)
+                              : 'No time'}
+                        </td>
+                        <td class="py-2 text-right">
+                          {result.best_lap_time
+                            ? formatTime(result.best_lap_time)
+                            : 'No time'}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          ))
+      }
+    </div>
+
+    <a href="/wtec" class="inline-block mt-8 text-gray-400 hover:text-white">
+      ← Back to Race Schedule
+    </a>
+  </main>
+</Layout>
+
+<script>
+  const tabs = document.querySelectorAll('[data-tab]');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabIndex = tab.getAttribute('data-tab');
+
+      // Update tab styles
+      tabs.forEach(t => {
+        t.classList.remove('border-blue-500', 'text-white');
+        t.classList.add('border-transparent', 'text-gray-400');
+      });
+      tab.classList.remove('border-transparent', 'text-gray-400');
+      tab.classList.add('border-blue-500', 'text-white');
+
+      // Show selected content
+      contents.forEach(content => {
+        content.style.display =
+          content.getAttribute('data-tab') === tabIndex ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
