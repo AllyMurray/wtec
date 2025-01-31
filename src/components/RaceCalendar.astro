@@ -38,18 +38,15 @@ const upcomingSessions = sortedSessions.filter(
 );
 
 function formatDate(date: Date) {
-  return date.toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
+  return DateTime.fromJSDate(date)
+    .setZone('Europe/London')
+    .toFormat('d MMM yyyy');
 }
 
 function formatTime(date: Date) {
-  return date.toLocaleTimeString('en-GB', {
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+  return DateTime.fromJSDate(date)
+    .setZone('Europe/London')
+    .toFormat('HH:mm');
 }
 
 function getTrackMapUrl(trackId: number) {
@@ -83,8 +80,8 @@ function getTrackMapUrl(trackId: number) {
             </div>
             <div class="flex justify-between items-center mt-4">
               <p class="text-lg">
-                {formatDate(new Date(session.launch_at))} |{' '}
-                {formatTime(new Date(session.launch_at))}
+                {formatDate(DateTime.fromISO(session.launch_at).toJSDate())} |{' '}
+                {formatTime(DateTime.fromISO(session.launch_at).toJSDate())}
               </p>
             </div>
           </div>
@@ -120,7 +117,7 @@ function getTrackMapUrl(trackId: number) {
               </div>
             </div>
             <div class="flex justify-between items-center mt-4">
-              <p class="text-lg">{formatDate(new Date(session.launch_at))}</p>
+              <p class="text-lg">{formatDate(DateTime.fromISO(session.launch_at).toJSDate())}</p>
               <span class="inline-flex items-center gap-1 text-blue-400 group-hover:text-blue-300 transition-colors">
                 View Results →
               </span>
