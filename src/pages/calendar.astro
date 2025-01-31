@@ -7,9 +7,9 @@ import sessions from '../data/league-season-sessions.json';
 const raceSessions = sessions.sessions || [];
 ---
 
-<Layout title="Season 13 - Schedule">
+<Layout title="Season 13 - Calendar">
   <main class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent drop-shadow">Race Schedule</h1>
+    <h1 class="text-3xl font-bold mb-8">Race Calendar</h1>
     <RaceCalendar sessions={raceSessions} />
   </main>
 </Layout>
