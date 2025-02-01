@@ -32,6 +32,7 @@ const { session, results } = Astro.props;
 const { default: raceResults } = await results;
 
 function formatTime(time: number) {
+  if (!time || time <= 0) return 'No time';
   return (time / 10000).toFixed(3) + 's';
 }
 ---
@@ -69,6 +70,7 @@ function formatTime(time: number) {
 
       {
         [...raceResults.session_results]
+          .filter(r => !['WARMUP', 'PRACTICE'].includes(r.simsession_name))
           .reverse()
           .map((session, sessionIndex) => (
             <div
@@ -82,7 +84,7 @@ function formatTime(time: number) {
                     <th class="pb-2">Pos</th>
                     <th class="pb-2">Driver</th>
                     <th class="pb-2 text-right">
-                      {session.simsession_type_name === 'Race'
+                      {session.simsession_type === 6
                         ? 'Gap'
                         : 'Best Time'}
                     </th>
@@ -92,31 +94,40 @@ function formatTime(time: number) {
                 <tbody>
                   {session.results
                     .sort((a, b) => {
-                      if (session.simsession_type_name === 'Race') {
+                      console.log('Session type:', session.simsession_type);
+                      console.log('Session name:', session.simsession_name);
+                      console.log(
+                        'Session type name:',
+                        session.simsession_type_name
+                      );
+
+                      const isRaceSession = session.simsession_type === 6;
+                      if (isRaceSession) {
                         return a.finish_position - b.finish_position;
                       }
-                      return (
-                        (a.best_lap_time || Infinity) -
-                        (b.best_lap_time || Infinity)
-                      );
+                      // For qualifying sessions
+                      const aTime = a.best_lap_time || Infinity;
+                      const bTime = b.best_lap_time || Infinity;
+                      if (aTime === Infinity && bTime === Infinity) {
+                        return 0;
+                      }
+                      return aTime - bTime;
                     })
                     .map((result, index) => (
                       <tr class="border-b border-gray-700/50 text-gray-400">
                         <td class="py-2">{index + 1}</td>
                         <td class="py-2">{result.display_name}</td>
                         <td class="py-2 text-right">
-                          {session.simsession_type_name === 'Race'
+                          {session.simsession_type === 6
                             ? index === 0
                               ? 'Winner'
-                              : `+${formatTime(result.interval)}`
-                            : result.best_lap_time
-                              ? formatTime(result.best_lap_time)
-                              : 'No time'}
+                              : result.interval > 0
+                                ? `+${formatTime(result.interval)}`
+                                : 'DNF'
+                            : formatTime(result.best_lap_time)}
                         </td>
                         <td class="py-2 text-right">
-                          {result.best_lap_time
-                            ? formatTime(result.best_lap_time)
-                            : 'No time'}
+                          {formatTime(result.best_lap_time)}
                         </td>
                       </tr>
                     ))}

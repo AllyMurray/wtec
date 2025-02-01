@@ -44,9 +44,7 @@ function formatDate(date: Date) {
 }
 
 function formatTime(date: Date) {
-  return DateTime.fromJSDate(date)
-    .setZone('Europe/London')
-    .toFormat('HH:mm');
+  return DateTime.fromJSDate(date).setZone('Europe/London').toFormat('HH:mm');
 }
 
 function getTrackMapUrl(trackId: number) {
@@ -117,7 +115,9 @@ function getTrackMapUrl(trackId: number) {
               </div>
             </div>
             <div class="flex justify-between items-center mt-4">
-              <p class="text-lg">{formatDate(DateTime.fromISO(session.launch_at).toJSDate())}</p>
+              <p class="text-lg">
+                {formatDate(DateTime.fromISO(session.launch_at).toJSDate())}
+              </p>
               <span class="inline-flex items-center gap-1 text-blue-400 group-hover:text-blue-300 transition-colors">
                 View Results →
               </span>
