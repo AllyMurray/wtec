@@ -18,6 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: node:22
+    environment: github-pages
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
