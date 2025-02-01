@@ -32,7 +32,7 @@ jobs:
         run: pnpm install
 
       - name: Fetch iRacing data
-        run: pnpm run fetch-iracing-data
+        run: pnpm run fetch-iracing-data-ci
         env:
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}

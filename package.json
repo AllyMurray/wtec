@@ -7,7 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-iracing-data": "npx tsx --env-file=.env scripts/fetch-iracing-data.ts"
+    "fetch-iracing-data": "npx tsx --env-file=.env scripts/fetch-iracing-data.ts",
+    "fetch-iracing-data-ci": "npx tsx scripts/fetch-iracing-data.ts"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.5",
