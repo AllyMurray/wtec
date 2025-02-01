@@ -84,11 +84,11 @@ function formatTime(time: number) {
                     <th class="pb-2">Pos</th>
                     <th class="pb-2">Driver</th>
                     <th class="pb-2 text-right">
-                      {session.simsession_type === 6
-                        ? 'Gap'
-                        : 'Best Time'}
+                      {session.simsession_type === 6 ? 'Gap' : 'Qualifying Time'}
                     </th>
-                    <th class="pb-2 text-right">Best Lap</th>
+                    {session.simsession_type === 6 && (
+                      <th class="pb-2 text-right">Best Lap</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -126,9 +126,11 @@ function formatTime(time: number) {
                                 : 'DNF'
                             : formatTime(result.best_lap_time)}
                         </td>
-                        <td class="py-2 text-right">
-                          {formatTime(result.best_lap_time)}
-                        </td>
+                        {session.simsession_type === 6 && (
+                          <td class="py-2 text-right">
+                            {formatTime(result.best_lap_time)}
+                          </td>
+                        )}
                       </tr>
                     ))}
                 </tbody>
