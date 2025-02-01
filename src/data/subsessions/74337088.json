@@ -6730,8 +6730,8 @@
   "weather": {
     "allow_fog": false,
     "fog": 0,
-    "precip_mm2hr_before_final_session": 0,
     "precip_mm_final_session": 0,
+    "precip_mm2hr_before_final_session": 0,
     "precip_option": 0,
     "precip_time_pct": 0,
     "rel_humidity": 28,
