@@ -34,7 +34,7 @@ jobs:
       - name: Fetch iRacing data
         run: pnpm run fetch-iracing-data-ci
         env:
-          EMAIL: ${{ secrets.EMAIL }}
+          EMAIL: ${{ vars.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
 
       - name: Build site
