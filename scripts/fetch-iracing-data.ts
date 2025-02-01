@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { LeagueSeasons } from '../src/schemas/league-seasons';
 import { LeagueSeasonSessions } from '../src/schemas/league-season-sessions';
 import { TrackAssets } from '../src/schemas/track-assets';
+import { Members } from '../src/schemas/members';
 
 if (!process.env.EMAIL || !process.env.PASSWORD) {
   throw new Error('Missing required environment variables EMAIL and/or PASSWORD');
@@ -39,6 +40,7 @@ async function fetchLeagueData() {
     // Validate the data against our schema
     const validatedData = League.parse(rawData);
     await saveDataToFile(validatedData, 'league.json');
+    return validatedData;
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
@@ -107,11 +109,37 @@ async function fetchTrackAssets() {
   }
 }
 
+async function fetchMemberData(leagueData: z.infer<typeof League>) {
+  try {
+    // Extract customer IDs from the league data
+    const customerIds = leagueData.roster.map((member: { cust_id: number }) => member.cust_id);
+
+    // Fetch member data
+    const rawData = await client.makeAuthorizedRequest('/data/member/get', {
+      cust_ids: customerIds.join(','),
+      include_licenses: false
+    });
+
+    // Validate the data against our schema
+    const validatedData = Members.parse(rawData);
+    await saveDataToFile(validatedData, 'members.json');
+    return validatedData;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
+    } else {
+      console.error('Error:', error);
+    }
+    process.exit(1);
+  }
+}
+
 async function fetchAllData() {
-  await fetchLeagueData();
+  const leagueData = await fetchLeagueData();
   await fetchLeagueSeasonData();
   await fetchLeagueSeasonSessionData();
   await fetchTrackAssets();
+  await fetchMemberData(leagueData!);
 }
 
 fetchAllData().catch(console.error);
