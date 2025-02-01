@@ -5,6 +5,7 @@ import { League } from '../src/schemas/league';
 import { z } from 'zod';
 import { LeagueSeasons } from '../src/schemas/league-seasons';
 import { LeagueSeasonSessions } from '../src/schemas/league-season-sessions';
+import { TrackAssets } from '../src/schemas/track-assets';
 
 if (!process.env.EMAIL || !process.env.PASSWORD) {
   throw new Error('Missing required environment variables EMAIL and/or PASSWORD');
@@ -28,7 +29,7 @@ async function saveDataToFile(data: unknown, filename: string) {
   console.log(`Data successfully written to ${filePath}`);
 }
 
-async function fetchAndSaveLeagueData() {
+async function fetchLeagueData() {
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/get', {
       league_id: wtecLeagueId,
@@ -48,7 +49,7 @@ async function fetchAndSaveLeagueData() {
   }
 }
 
-async function fetchAndSaveLeagueSeasons() {
+async function fetchLeagueSeasonData() {
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/seasons', {
       league_id: wtecLeagueId,
@@ -68,7 +69,7 @@ async function fetchAndSaveLeagueSeasons() {
   }
 }
 
-async function fetchAndSaveLeagueSeasonSessions() {
+async function fetchLeagueSeasonSessionData() {
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/season_sessions', {
       league_id: wtecLeagueId,
@@ -89,10 +90,28 @@ async function fetchAndSaveLeagueSeasonSessions() {
   }
 }
 
+async function fetchTrackAssets() {
+  try {
+    const rawData = await client.makeAuthorizedRequest('/data/track/assets');
+
+    // Validate the data against our schema
+    const validatedData = TrackAssets.parse(rawData);
+    await saveDataToFile(validatedData, 'track-assets.json');
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
+    } else {
+      console.error('Error:', error);
+    }
+    process.exit(1);
+  }
+}
+
 async function fetchAllData() {
-  await fetchAndSaveLeagueData();
-  await fetchAndSaveLeagueSeasons();
-  await fetchAndSaveLeagueSeasonSessions();
+  await fetchLeagueData();
+  await fetchLeagueSeasonData();
+  await fetchLeagueSeasonSessionData();
+  await fetchTrackAssets();
 }
 
 fetchAllData().catch(console.error);

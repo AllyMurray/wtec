@@ -84,7 +84,9 @@ function formatTime(time: number) {
                     <th class="pb-2">Pos</th>
                     <th class="pb-2">Driver</th>
                     <th class="pb-2 text-right">
-                      {session.simsession_type === 6 ? 'Gap' : 'Qualifying Time'}
+                      {session.simsession_type === 6
+                        ? 'Gap'
+                        : 'Qualifying Time'}
                     </th>
                     {session.simsession_type === 6 && (
                       <th class="pb-2 text-right">Best Lap</th>
