@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import { LeagueSeasonSessions } from '../../schemas/league-season-sessions';
 import { DateTime } from 'luxon';
+import { getTrackMapUrl, getTrackDetails } from '../../utils/tracks';
+import type { Subsession } from '../../schemas/subsession';
 
 export async function getStaticPaths() {
   const { sessions } = await LeagueSeasonSessions.parse(
@@ -18,22 +20,27 @@ export async function getStaticPaths() {
       );
     })
     .map(session => ({
-      params: { subsessionId: session.subsession_id.toString() },
+      params: { subsessionId: session.subsession_id?.toString() ?? '' },
       props: {
         session,
         results: import.meta
-          .glob('/src/data/subsessions/*.json')
+          .glob<{ default: Subsession }>('/src/data/subsessions/*.json')
           [`/src/data/subsessions/${session.subsession_id}.json`](),
       },
     }));
 }
 
 const { session, results } = Astro.props;
-const { default: raceResults } = await results;
+const raceResults = await results;
 
 function formatTime(time: number) {
   if (!time || time <= 0) return 'No time';
   return (time / 10000).toFixed(3) + 's';
+}
+
+// Type guard for session results
+function isRaceSession(session: { simsession_type: number }): boolean {
+  return session.simsession_type === 6;
 }
 ---
 
@@ -84,11 +91,9 @@ function formatTime(time: number) {
                     <th class="pb-2">Pos</th>
                     <th class="pb-2">Driver</th>
                     <th class="pb-2 text-right">
-                      {session.simsession_type === 6
-                        ? 'Gap'
-                        : 'Qualifying Time'}
+                      {isRaceSession(session) ? 'Gap' : 'Qualifying Time'}
                     </th>
-                    {session.simsession_type === 6 && (
+                    {isRaceSession(session) && (
                       <th class="pb-2 text-right">Best Lap</th>
                     )}
                   </tr>
@@ -96,16 +101,8 @@ function formatTime(time: number) {
                 <tbody>
                   {session.results
                     .sort((a, b) => {
-                      console.log('Session type:', session.simsession_type);
-                      console.log('Session name:', session.simsession_name);
-                      console.log(
-                        'Session type name:',
-                        session.simsession_type_name
-                      );
-
-                      const isRaceSession = session.simsession_type === 6;
-                      if (isRaceSession) {
-                        return a.finish_position - b.finish_position;
+                      if (isRaceSession(session)) {
+                        return (a.finish_position ?? 0) - (b.finish_position ?? 0);
                       }
                       // For qualifying sessions
                       const aTime = a.best_lap_time || Infinity;
@@ -120,17 +117,17 @@ function formatTime(time: number) {
                         <td class="py-2">{index + 1}</td>
                         <td class="py-2">{result.display_name}</td>
                         <td class="py-2 text-right">
-                          {session.simsession_type === 6
+                          {isRaceSession(session)
                             ? index === 0
                               ? 'Winner'
-                              : result.interval > 0
+                              : result.interval && result.interval > 0
                                 ? `+${formatTime(result.interval)}`
                                 : 'DNF'
-                            : formatTime(result.best_lap_time)}
+                            : formatTime(result.best_lap_time ?? 0)}
                         </td>
-                        {session.simsession_type === 6 && (
+                        {isRaceSession(session) && (
                           <td class="py-2 text-right">
-                            {formatTime(result.best_lap_time)}
+                            {formatTime(result.best_lap_time ?? 0)}
                           </td>
                         )}
                       </tr>
@@ -149,8 +146,8 @@ function formatTime(time: number) {
 </Layout>
 
 <script>
-  const tabs = document.querySelectorAll('[data-tab]');
-  const contents = document.querySelectorAll('.tab-content');
+  const tabs = document.querySelectorAll<HTMLElement>('[data-tab]');
+  const contents = document.querySelectorAll<HTMLElement>('.tab-content');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -166,8 +163,10 @@ function formatTime(time: number) {
 
       // Show selected content
       contents.forEach(content => {
-        content.style.display =
-          content.getAttribute('data-tab') === tabIndex ? '' : 'none';
+        if (content instanceof HTMLElement) {
+          content.style.display =
+            content.getAttribute('data-tab') === tabIndex ? '' : 'none';
+        }
       });
     });
   });

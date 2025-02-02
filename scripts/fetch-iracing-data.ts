@@ -32,6 +32,15 @@ async function saveDataToFile(data: unknown, filename: string) {
   console.log(`Data successfully written to ${filePath}`);
 }
 
+function handleError(error: unknown) {
+  if (error instanceof z.ZodError) {
+    console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
+  } else {
+    console.error('Error:', error);
+  }
+  process.exit(1);
+}
+
 async function fetchLeagueData() {
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/get', {
@@ -44,12 +53,7 @@ async function fetchLeagueData() {
     await saveDataToFile(validatedData, 'league.json');
     return validatedData;
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
-    } else {
-      console.error('Error:', error);
-    }
-    process.exit(1);
+    handleError(error);
   }
 }
 
@@ -64,12 +68,7 @@ async function fetchLeagueSeasonData() {
     const validatedData = LeagueSeasons.parse(rawData);
     await saveDataToFile(validatedData, 'league-seasons.json');
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
-    } else {
-      console.error('Error:', error);
-    }
-    process.exit(1);
+    handleError(error);
   }
 }
 
@@ -86,12 +85,7 @@ async function fetchLeagueSeasonSessionData() {
     await saveDataToFile(validatedData, 'league-season-sessions.json');
     return validatedData;
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
-    } else {
-      console.error('Error:', error);
-    }
-    process.exit(1);
+    handleError(error);
   }
 }
 
@@ -103,12 +97,7 @@ async function fetchTrackAssets() {
     const validatedData = TrackAssets.parse(rawData);
     await saveDataToFile(validatedData, 'track-assets.json');
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
-    } else {
-      console.error('Error:', error);
-    }
-    process.exit(1);
+    handleError(error);
   }
 }
 
@@ -128,12 +117,7 @@ async function fetchMemberData(leagueData: z.infer<typeof League>) {
     await saveDataToFile(validatedData, 'members.json');
     return validatedData;
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
-    } else {
-      console.error('Error:', error);
-    }
-    process.exit(1);
+    handleError(error);
   }
 }
 
@@ -157,12 +141,7 @@ async function fetchSubsessionData(subsessionId: string) {
     fs.writeFileSync(filePath, JSON.stringify(validatedData, null, 2));
     console.log(`Subsession data successfully written to ${filePath}`);
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
-    } else {
-      console.error('Error:', error);
-    }
-    process.exit(1);
+    handleError(error);
   }
 }
 

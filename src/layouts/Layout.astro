@@ -1,5 +1,6 @@
 ---
 import league from '../data/league.json';
+import { normalizePath } from '../utils/paths';
 
 interface Props {
 	title?: string;
@@ -10,8 +11,8 @@ const currentPath = Astro.url.pathname;
 const basePath = import.meta.env.BASE_URL;
 
 // Remove trailing slash for consistent comparison
-const normalizedPath = currentPath.endsWith('/') ? currentPath.slice(0, -1) : currentPath;
-const normalizedBasePath = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+const normalizedPath = normalizePath(currentPath);
+const normalizedBasePath = normalizePath(basePath);
 const isSchedulePage = normalizedPath === normalizedBasePath;
 const isStandingsPage = normalizedPath === `${normalizedBasePath}/standings`;
 const isDriversPage = normalizedPath === `${normalizedBasePath}/drivers`;

@@ -1,7 +1,8 @@
 ---
-import trackAssets from '../data/track-assets.json';
 import type { LeagueSeasonSession } from '../schemas/league-season-sessions';
 import { DateTime } from 'luxon';
+import { formatDate, formatTime } from '../utils/date';
+import { getTrackInactiveUrl } from '../utils/tracks';
 
 interface Props {
   sessions: LeagueSeasonSession[];
@@ -9,16 +10,10 @@ interface Props {
 
 const { sessions } = Astro.props;
 
-function getTrackInactiveUrl(trackId: number) {
-  const track = trackAssets[trackId];
-  if (!track?.track_map) return null;
-  return `${track.track_map}inactive.svg`;
-}
-
 // Sort sessions by date
 const sortedSessions = [...sessions]
   .filter(session => {
-    const date = DateTime.fromISO(session.launch_at).setZone('Europe/London'); // Convert UTC to London time
+    const date = DateTime.fromISO(session.launch_at).setZone('Europe/London');
     return date.weekday === 4 && date.hour === 19 && date.minute === 0;
   })
   .sort(
@@ -36,16 +31,6 @@ const pastSessions = sortedSessions
 const upcomingSessions = sortedSessions.filter(
   s => DateTime.fromISO(s.launch_at) >= now
 );
-
-function formatDate(date: Date) {
-  return DateTime.fromJSDate(date)
-    .setZone('Europe/London')
-    .toFormat('d MMM yyyy');
-}
-
-function formatTime(date: Date) {
-  return DateTime.fromJSDate(date).setZone('Europe/London').toFormat('HH:mm');
-}
 
 function getTrackMapUrl(trackId: number) {
   return `https://members-ng.iracing.com/track/map/${trackId}`;
