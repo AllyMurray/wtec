@@ -102,7 +102,9 @@ function isRaceSession(session: { simsession_type: number }): boolean {
                   {session.results
                     .sort((a, b) => {
                       if (isRaceSession(session)) {
-                        return (a.finish_position ?? 0) - (b.finish_position ?? 0);
+                        return (
+                          (a.finish_position ?? 0) - (b.finish_position ?? 0)
+                        );
                       }
                       // For qualifying sessions
                       const aTime = a.best_lap_time || Infinity;

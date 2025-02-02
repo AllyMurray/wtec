@@ -9,6 +9,7 @@ import { TrackAssets } from '../src/schemas/track-assets';
 import { Members } from '../src/schemas/members';
 import { Subsession } from '../src/schemas/subsession';
 import { DateTime } from 'luxon';
+import { Track, Tracks } from '../schemas/track';
 
 if (!process.env.EMAIL || !process.env.PASSWORD) {
   throw new Error('Missing required environment variables EMAIL and/or PASSWORD');
@@ -145,6 +146,22 @@ async function fetchSubsessionData(subsessionId: string) {
   }
 }
 
+async function fetchTracks() {
+  try {
+    const rawData = await client.makeAuthorizedRequest('/data/track/get');
+
+    // Validate the data against our schema
+    const validatedData = Tracks.parse(rawData);
+    await saveDataToFile(validatedData, 'tracks.json');
+
+    console.log(`Successfully fetched and validated ${validatedData.length} tracks`);
+    return validatedData;
+  } catch (error) {
+    handleError(error);
+    return null;
+  }
+}
+
 async function fetchAllData() {
   const leagueData = await fetchLeagueData();
   await fetchLeagueSeasonData();
@@ -177,3 +194,5 @@ async function fetchAllData() {
 }
 
 fetchAllData().catch(console.error);
+
+export { fetchTracks };

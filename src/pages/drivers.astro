@@ -10,19 +10,26 @@ const combinedMembers = members.members.map(member => {
   const leagueMember = league.roster.find(d => d.cust_id === member.cust_id);
   return {
     ...member,
-    league_member_since: leagueMember?.league_member_since || member.member_since,
+    league_member_since:
+      leagueMember?.league_member_since || member.member_since,
     car_number: leagueMember?.car_number,
     admin: leagueMember?.admin || false,
-    owner: leagueMember?.owner || false
+    owner: leagueMember?.owner || false,
   };
 });
 
 // Sort members by league member since date (oldest first)
-const sortedMembers = [...combinedMembers].sort((a, b) =>
-  new Date(a.league_member_since).getTime() - new Date(b.league_member_since).getTime()
+const sortedMembers = [...combinedMembers].sort(
+  (a, b) =>
+    new Date(a.league_member_since).getTime() -
+    new Date(b.league_member_since).getTime()
 );
 
-function getHelmetStyle(helmet: { color1: string; color2: string; color3: string }) {
+function getHelmetStyle(helmet: {
+  color1: string;
+  color2: string;
+  color3: string;
+}) {
   return {
     '--color1': `#${helmet.color1}`,
     '--color2': `#${helmet.color2}`,
@@ -33,72 +40,96 @@ function getHelmetStyle(helmet: { color1: string; color2: string; color3: string
 
 <Layout title="Season 13 - Drivers">
   <div class="min-h-screen font-sans">
-    <img class="fixed top-0 left-0 w-full h-full -z-10 blur-[100px] opacity-20" src={background.src} alt="" fetchpriority="high" />
+    <img
+      class="fixed top-0 left-0 w-full h-full -z-10 blur-[100px] opacity-20"
+      src={background.src}
+      alt=""
+      fetchpriority="high"
+    />
     <main class="min-h-screen flex justify-center items-center p-4">
-      <div class="w-full max-w-6xl bg-gray-900/90 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-gray-800">
+      <div
+        class="w-full max-w-6xl bg-gray-900/90 backdrop-blur-sm rounded-lg shadow-lg overflow-hidden border border-gray-800"
+      >
         <div class="p-6">
-          <h1 class="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent drop-shadow">Drivers</h1>
+          <h1
+            class="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent drop-shadow"
+          >
+            Drivers
+          </h1>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {sortedMembers.map((driver) => (
-              <div class="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition flex flex-col">
-                <div class="flex items-start gap-4">
-                  <div
-                    class="w-14 h-14 relative helmet-container mt-1"
-                    style={getHelmetStyle(driver.helmet)}
-                    title={`Helmet Pattern ${driver.helmet.pattern}`}
-                  >
-                    <svg viewBox="-5.88 -5.88 70.59 70.59" class="w-full h-full" style="transform: scale(-1, 1)">
-                      {/* Main Shell */}
-                      <path
-                        d="M57.284,37.476c-7.606,3.006-14.642,4.53-20.908,4.53c-4.969,0-8.302-0.936-10.292-1.494c-0.313-0.089-0.584-0.166-0.821-0.225c-4.978-1.248-9.311-4.405-11.891-8.663c-0.148-0.248-0.282-0.479-0.408-0.709c-1.495-2.729-1.438-5.967,0.156-8.658c1.585-2.675,4.489-4.336,7.578-4.336c0.58,0,1.162,0.06,1.729,0.176c1.608,0.33,3.104,0.498,4.447,0.498c1.692,0,2.783-0.252,3.66-0.454l0.28-0.064c0.28-0.063,0.55-0.167,0.806-0.309l9.83-5.487c-0.1-0.083-0.188-0.159-0.297-0.247c-4.499-3.621-10.2-5.616-16.053-5.616c-4.822,0-9.563,1.326-13.706,3.836c-5.466,3.31-8.898,7.566-10.185,12.585c-0.197,0.591-4.71,14.59,5.073,25.407c0.472,0.578,2.991,2.82,14.154,3.805c2.714,0.239,5.5,0.361,8.282,0.361c0.001,0,0.001,0,0.001,0c5.396,0,10.963-0.456,16.549-1.354c4.663-0.75,8.362-1.596,10.995-2.515c0.288-0.101,0.515-0.327,0.615-0.615c0.09-0.257,1.967-5.782,0.66-10.572C57.455,37.397,57.373,37.441,57.284,37.476z M19.568,47.581c-0.33,0.028-0.658,0.041-0.984,0.041c-6.044,0-11.196-4.65-11.706-10.779c-0.046-0.551,0.362-1.034,0.913-1.079c0.562-0.065,1.034,0.362,1.079,0.913c0.446,5.359,5.166,9.358,10.532,8.912c0.564-0.058,1.034,0.363,1.079,0.913C20.526,47.053,20.118,47.536,19.568,47.581z"
-                        fill={`#${driver.helmet.color1}`}
-                        stroke-width="0"
-                      />
-                      {/* Visor */}
-                      <path
-                        d="M58.225,30.065l-9.666-15.303c-0.707-1.12-1.921-1.789-3.247-1.789c-0.626,0-1.25,0.156-1.821,0.461l-10.896,6.082c-0.421,0.234-0.87,0.407-1.334,0.512l-0.274,0.063c-0.887,0.205-2.094,0.479-3.877,0.501c0.119,8.201,8.734,17.391,16.988,18.671c3.921-0.709,8.08-1.918,12.453-3.646c0.987-0.39,1.747-1.207,2.085-2.243C58.998,32.26,58.849,31.055,58.225,30.065z"
-                        fill={`#${driver.helmet.color3}`}
-                        stroke-width="0"
-                        class="helmet-visor"
-                      />
-                      {/* Detail */}
-                      <path
-                        d="M14.841,23.277c-1.229,2.076-1.276,4.572-0.122,6.679c0.113,0.207,0.233,0.415,0.364,0.633c2.309,3.811,6.196,6.639,10.665,7.759c0.254,0.063,0.545,0.146,0.876,0.239c1.893,0.531,5.059,1.42,9.752,1.42c0.945,0,1.915-0.05,2.898-0.122c-7.568-3.349-14.118-11.643-14.168-19.377c-0.981-0.085-2.006-0.231-3.079-0.451C19.21,19.479,16.312,20.796,14.841,23.277z M25.084,27.419c0,2.206-1.794,4-4,4s-4-1.794-4-4s1.794-4,4-4S25.084,25.213,25.084,27.419z"
-                        fill={`#${driver.helmet.color2}`}
-                        stroke-width="0"
-                      />
-                    </svg>
-                  </div>
-                  <div>
-                    <div class="flex flex-col">
-                      <h3 class="text-xl font-bold">
-                        {driver.display_name}
-                        {driver.car_number &&
-                          <span class="text-sm text-gray-400 ml-2">#{driver.car_number}</span>
-                        }
-                      </h3>
-                      <p class="text-gray-400">
-                        Member since {formatDateString(driver.league_member_since)}
-                      </p>
+            {
+              sortedMembers.map(driver => (
+                <div class="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition flex flex-col">
+                  <div class="flex items-start gap-4">
+                    <div
+                      class="w-14 h-14 relative helmet-container mt-1"
+                      style={getHelmetStyle(driver.helmet)}
+                      title={`Helmet Pattern ${driver.helmet.pattern}`}
+                    >
+                      <svg
+                        viewBox="-5.88 -5.88 70.59 70.59"
+                        class="w-full h-full"
+                        style="transform: scale(-1, 1)"
+                      >
+                        {/* Main Shell */}
+                        <path
+                          d="M57.284,37.476c-7.606,3.006-14.642,4.53-20.908,4.53c-4.969,0-8.302-0.936-10.292-1.494c-0.313-0.089-0.584-0.166-0.821-0.225c-4.978-1.248-9.311-4.405-11.891-8.663c-0.148-0.248-0.282-0.479-0.408-0.709c-1.495-2.729-1.438-5.967,0.156-8.658c1.585-2.675,4.489-4.336,7.578-4.336c0.58,0,1.162,0.06,1.729,0.176c1.608,0.33,3.104,0.498,4.447,0.498c1.692,0,2.783-0.252,3.66-0.454l0.28-0.064c0.28-0.063,0.55-0.167,0.806-0.309l9.83-5.487c-0.1-0.083-0.188-0.159-0.297-0.247c-4.499-3.621-10.2-5.616-16.053-5.616c-4.822,0-9.563,1.326-13.706,3.836c-5.466,3.31-8.898,7.566-10.185,12.585c-0.197,0.591-4.71,14.59,5.073,25.407c0.472,0.578,2.991,2.82,14.154,3.805c2.714,0.239,5.5,0.361,8.282,0.361c0.001,0,0.001,0,0.001,0c5.396,0,10.963-0.456,16.549-1.354c4.663-0.75,8.362-1.596,10.995-2.515c0.288-0.101,0.515-0.327,0.615-0.615c0.09-0.257,1.967-5.782,0.66-10.572C57.455,37.397,57.373,37.441,57.284,37.476z M19.568,47.581c-0.33,0.028-0.658,0.041-0.984,0.041c-6.044,0-11.196-4.65-11.706-10.779c-0.046-0.551,0.362-1.034,0.913-1.079c0.562-0.065,1.034,0.362,1.079,0.913c0.446,5.359,5.166,9.358,10.532,8.912c0.564-0.058,1.034,0.363,1.079,0.913C20.526,47.053,20.118,47.536,19.568,47.581z"
+                          fill={`#${driver.helmet.color1}`}
+                          stroke-width="0"
+                        />
+                        {/* Visor */}
+                        <path
+                          d="M58.225,30.065l-9.666-15.303c-0.707-1.12-1.921-1.789-3.247-1.789c-0.626,0-1.25,0.156-1.821,0.461l-10.896,6.082c-0.421,0.234-0.87,0.407-1.334,0.512l-0.274,0.063c-0.887,0.205-2.094,0.479-3.877,0.501c0.119,8.201,8.734,17.391,16.988,18.671c3.921-0.709,8.08-1.918,12.453-3.646c0.987-0.39,1.747-1.207,2.085-2.243C58.998,32.26,58.849,31.055,58.225,30.065z"
+                          fill={`#${driver.helmet.color3}`}
+                          stroke-width="0"
+                          class="helmet-visor"
+                        />
+                        {/* Detail */}
+                        <path
+                          d="M14.841,23.277c-1.229,2.076-1.276,4.572-0.122,6.679c0.113,0.207,0.233,0.415,0.364,0.633c2.309,3.811,6.196,6.639,10.665,7.759c0.254,0.063,0.545,0.146,0.876,0.239c1.893,0.531,5.059,1.42,9.752,1.42c0.945,0,1.915-0.05,2.898-0.122c-7.568-3.349-14.118-11.643-14.168-19.377c-0.981-0.085-2.006-0.231-3.079-0.451C19.21,19.479,16.312,20.796,14.841,23.277z M25.084,27.419c0,2.206-1.794,4-4,4s-4-1.794-4-4s1.794-4,4-4S25.084,25.213,25.084,27.419z"
+                          fill={`#${driver.helmet.color2}`}
+                          stroke-width="0"
+                        />
+                      </svg>
                     </div>
-                    {(driver.admin || driver.owner) &&
-                      <div class="flex gap-2 mt-2">
-                        {driver.admin &&
-                          <span class="bg-blue-900/50 text-blue-200 text-xs px-2 py-1 rounded border border-blue-700">Admin</span>
-                        }
-                        {driver.owner &&
-                          <span class="bg-purple-900/50 text-purple-200 text-xs px-2 py-1 rounded border border-purple-700">Owner</span>
-                        }
+                    <div>
+                      <div class="flex flex-col">
+                        <h3 class="text-xl font-bold">
+                          {driver.display_name}
+                          {driver.car_number && (
+                            <span class="text-sm text-gray-400 ml-2">
+                              #{driver.car_number}
+                            </span>
+                          )}
+                        </h3>
+                        <p class="text-gray-400">
+                          Member since{' '}
+                          {formatDateString(driver.league_member_since)}
+                        </p>
                       </div>
-                    }
+                      {(driver.admin || driver.owner) && (
+                        <div class="flex gap-2 mt-2">
+                          {driver.admin && (
+                            <span class="bg-blue-900/50 text-blue-200 text-xs px-2 py-1 rounded border border-blue-700">
+                              Admin
+                            </span>
+                          )}
+                          {driver.owner && (
+                            <span class="bg-purple-900/50 text-purple-200 text-xs px-2 py-1 rounded border border-purple-700">
+                              Owner
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div class="mt-auto pt-4 text-sm text-gray-400">
+                    <p>Last seen: {formatDateString(driver.last_login)}</p>
                   </div>
                 </div>
-                <div class="mt-auto pt-4 text-sm text-gray-400">
-                  <p>Last seen: {formatDateString(driver.last_login)}</p>
-                </div>
-              </div>
-            ))}
+              ))
+            }
           </div>
         </div>
       </div>
@@ -130,7 +161,8 @@ function getHelmetStyle(helmet: { color1: string; color2: string; color3: string
     content: '';
     position: absolute;
     inset: -4px;
-    background: radial-gradient(circle at center,
+    background: radial-gradient(
+      circle at center,
       rgba(255, 255, 255, 0.25) 0%,
       rgba(255, 255, 255, 0.15) 40%,
       transparent 70%

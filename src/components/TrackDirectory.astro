@@ -1,0 +1,75 @@
+---
+import { getEnrichedTracks, groupTracksByRegion } from '../utils/tracks';
+
+const enrichedTracks = getEnrichedTracks();
+const tracksByRegion = groupTracksByRegion(enrichedTracks);
+---
+
+<div class="p-4">
+  {
+    Object.entries(tracksByRegion).map(([region, regionTracks]) => (
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">{region}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {regionTracks.map(track => (
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+              <div class="relative h-48">
+                <img
+                  src={track.large_image}
+                  alt={track.track_name}
+                  class="w-full h-full object-cover"
+                />
+                {track.logo && (
+                  <div class="absolute inset-0 flex items-center justify-center p-4 bg-black/30">
+                    <img
+                      src={track.logo}
+                      alt={`${track.track_name} Logo`}
+                      class="max-h-24 max-w-[80%] object-contain"
+                    />
+                  </div>
+                )}
+              </div>
+              <div class="p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="text-lg font-semibold mb-2">
+                      {track.track_name}
+                      {track.config_name !== 'Full Course' && (
+                        <span class="text-sm text-gray-600 dark:text-gray-400">
+                          - {track.config_name}
+                        </span>
+                      )}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                      {track.location}
+                    </p>
+                    <div class="mt-2 space-y-1">
+                      <p class="text-sm">
+                        <span class="text-gray-600 dark:text-gray-400">
+                          Length:
+                        </span>{' '}
+                        {track.track_config_length.toFixed(2)} km
+                      </p>
+                      <p class="text-sm">
+                        <span class="text-gray-600 dark:text-gray-400">
+                          Corners:
+                        </span>{' '}
+                        {track.corners_per_lap}
+                      </p>
+                      <p class="text-sm">
+                        <span class="text-gray-600 dark:text-gray-400">
+                          Price:
+                        </span>{' '}
+                        {track.price === 'Free' ? 'Free' : track.price_display}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))
+  }
+</div>
