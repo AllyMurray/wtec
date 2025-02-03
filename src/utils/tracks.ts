@@ -115,6 +115,12 @@ export function getEnrichedTracks(): EnrichedTrack[] {
         return new URL(fullPath, IRACING_ASSETS_URL).toString();
       };
 
+      // The resource for Thruxton is not available, replace with the resource the web UI uses
+      let logoPath = asset.logo;
+      if (logoPath?.includes('thruxtoncircuit-logo.png')) {
+        logoPath = logoPath.replace('thruxtoncircuit-logo.png', '504__dark.png');
+      }
+
       const enrichedTrack: EnrichedTrack = {
         ...asset,
         ...trackInfo,
@@ -128,7 +134,7 @@ export function getEnrichedTracks(): EnrichedTrack[] {
         price_display: trackInfo?.price ? `$${trackInfo.price.toFixed(2)}` : 'Free',
         large_image: makePath(asset.large_image),
         small_image: makePath(asset.small_image),
-        logo: asset.logo ? new URL(asset.logo, IRACING_ASSETS_URL).toString() : null,
+        logo: logoPath ? new URL(logoPath, IRACING_ASSETS_URL).toString() : null,
       };
 
       return enrichedTrack;

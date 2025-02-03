@@ -3,10 +3,10 @@ import league from '../data/league.json';
 import { normalizePath } from '../utils/paths';
 
 interface Props {
-	title?: string;
+  title?: string;
 }
 
-const { title = "Season 13" } = Astro.props;
+const { title = 'Season 13' } = Astro.props;
 const currentPath = Astro.url.pathname;
 const basePath = import.meta.env.BASE_URL;
 
@@ -16,54 +16,82 @@ const normalizedBasePath = normalizePath(basePath);
 const isSchedulePage = normalizedPath === normalizedBasePath;
 const isStandingsPage = normalizedPath === `${normalizedBasePath}/standings`;
 const isDriversPage = normalizedPath === `${normalizedBasePath}/drivers`;
+const isTracksPage = normalizedPath === `${normalizedBasePath}/tracks`;
 ---
 
 <!doctype html>
 <html lang="en" class="dark">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="m-0 w-full h-full bg-gray-900 text-gray-100">
-		<nav class="bg-gray-900/95 backdrop-blur-sm shadow-lg border-b border-gray-800">
-			<div class="max-w-7xl mx-auto px-4">
-				<div class="flex flex-col py-2">
-					<h1 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">
-						{league.league_name} (Season 13)
-					</h1>
-					<div class="flex justify-between h-16">
-						<div class="flex space-x-4 items-center">
-							<div class="flex space-x-8">
-								<a href={basePath}
-								   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
-										 ${isSchedulePage
-										   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
-										   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
-									Schedule
-								</a>
-								<a href={`${basePath}/standings`}
-								   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
-										 ${isStandingsPage
-										   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
-										   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
-									Standings
-								</a>
-								<a href={`${basePath}/drivers`}
-								   class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
-										 ${isDriversPage
-										   ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
-										   : 'text-gray-300 hover:text-white hover:bg-gray-800'}`}>
-									Drivers
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</nav>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="m-0 w-full h-full bg-gray-900 text-gray-100">
+    <nav
+      class="bg-gray-900/95 backdrop-blur-sm shadow-lg border-b border-gray-800"
+    >
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex flex-col py-2">
+          <h1
+            class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500"
+          >
+            {league.league_name} (Season 13)
+          </h1>
+          <div class="flex justify-between h-16">
+            <div class="flex space-x-4 items-center">
+              <div class="flex space-x-8">
+                <a
+                  href={basePath}
+                  class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
+										 ${
+                       isSchedulePage
+                         ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                     }`}
+                >
+                  Schedule
+                </a>
+                <a
+                  href={`${basePath}/standings`}
+                  class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
+										 ${
+                       isStandingsPage
+                         ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                     }`}
+                >
+                  Standings
+                </a>
+                <a
+                  href={`${basePath}/drivers`}
+                  class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
+										 ${
+                       isDriversPage
+                         ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                     }`}
+                >
+                  Drivers
+                </a>
+                <a
+                  href={`${basePath}/tracks`}
+                  class={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 ease-in-out
+										 ${
+                       isTracksPage
+                         ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-gray-900'
+                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                     }`}
+                >
+                  Tracks
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <slot />
+  </body>
 </html>
