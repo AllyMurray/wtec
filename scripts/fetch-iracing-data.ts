@@ -9,7 +9,7 @@ import { TrackAssets } from '../src/schemas/track-assets';
 import { Members } from '../src/schemas/members';
 import { Subsession } from '../src/schemas/subsession';
 import { DateTime } from 'luxon';
-import { Track, Tracks } from '../schemas/track';
+import { Track, Tracks } from '../src/schemas/track';
 
 if (!process.env.EMAIL || !process.env.PASSWORD) {
   throw new Error('Missing required environment variables EMAIL and/or PASSWORD');
