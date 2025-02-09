@@ -107,12 +107,14 @@ function isRaceSession(session: { simsession_type: number }): boolean {
                         );
                       }
                       // For qualifying sessions
-                      const aTime = a.best_lap_time || Infinity;
-                      const bTime = b.best_lap_time || Infinity;
-                      if (aTime === Infinity && bTime === Infinity) {
-                        return 0;
-                      }
-                      return aTime - bTime;
+                      // Consider 0, null, and undefined as no time
+                      const aHasTime = a.best_lap_time && a.best_lap_time > 0;
+                      const bHasTime = b.best_lap_time && b.best_lap_time > 0;
+
+                      if (!aHasTime && !bHasTime) return 0;
+                      if (!aHasTime) return 1; // Move a to the end
+                      if (!bHasTime) return -1; // Move b to the end
+                      return (a.best_lap_time || 0) - (b.best_lap_time || 0);
                     })
                     .map((result, index) => (
                       <tr class="border-b border-gray-700/50 text-gray-400">
