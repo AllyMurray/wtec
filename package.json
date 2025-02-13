@@ -7,6 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "fetch-standings": "npx tsx scripts/fetch-standings.ts",
     "fetch-iracing-data": "npx tsx --env-file=.env scripts/fetch-iracing-data.ts",
     "fetch-iracing-data-ci": "npx tsx scripts/fetch-iracing-data.ts"
   },
@@ -14,7 +15,9 @@
     "@astrojs/tailwind": "^5.1.5",
     "astro": "^5.1.9",
     "luxon": "^3.5.0",
+    "puppeteer": "^24.2.0",
     "tailwindcss": "^3.4.17",
+    "xlsx": "^0.18.5",
     "zod": "^3.24.1"
   },
   "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
