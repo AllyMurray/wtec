@@ -166,6 +166,7 @@ async function fetchAllData() {
   const leagueData = await fetchLeagueData();
   await fetchLeagueSeasonData();
   const seasonSessionData = await fetchLeagueSeasonSessionData();
+  await fetchTracks();
   await fetchTrackAssets();
   await fetchMemberData(leagueData!);
 
@@ -194,5 +195,3 @@ async function fetchAllData() {
 }
 
 fetchAllData().catch(console.error);
-
-export { fetchTracks };
