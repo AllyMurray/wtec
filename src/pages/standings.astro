@@ -1,6 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import background from '../assets/background.svg';
+import standingsData from '../data/standings.json';
+
+const { standings } = standingsData;
+
+function getPositionEmoji(position: number): string {
+  switch (position) {
+    case 1:
+      return '🏆';
+    case 2:
+      return '🥈';
+    case 3:
+      return '🥉';
+    default:
+      return '';
+  }
+}
+
+function getPositionClass(position: number): string {
+  switch (position) {
+    case 1:
+      return 'text-yellow-500';
+    case 2:
+      return 'text-gray-400';
+    case 3:
+      return 'text-amber-700';
+    default:
+      return '';
+  }
+}
 ---
 
 <Layout title="Season 13 - Standings">
@@ -44,220 +73,32 @@ import background from '../assets/background.svg';
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  class="bg-gradient-to-r from-gray-800/30 to-transparent hover:from-gray-800/50"
-                >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >1</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700 text-yellow-500"
-                    >🏆</td
-                  >
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Alex Williams8</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >95</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >2</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700 text-gray-400"
-                    >🥈</td
-                  >
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Adam S Robinson</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >93</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >3</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700 text-amber-700"
-                    >🥉</td
-                  >
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Luke Grundmann</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >75</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >4</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700">Ian Joyner</td>
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >70</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >5</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Michael Coomber</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >62</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >6</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Bevan Thomson</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >62</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >7</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Harry Pickard2</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >53</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >8</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Ernie Jettson</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >49</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >9</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Richard Harwood</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >39</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >10</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Thomas Barczak</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >35</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >11</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Matt Williams7</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >27</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >12</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Karl McGuirk</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >25</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >14</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700">Jomi Scott</td>
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >25</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >13</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Christopher Rowe3</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >21</td
-                  >
-                </tr>
-                <tr class="hover:bg-gray-800/30">
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >15</td
-                  >
-                  <td class="px-2 py-3 border-b border-gray-700"></td>
-                  <td class="px-4 py-3 border-b border-gray-700"
-                    >Alistair Murray</td
-                  >
-                  <td
-                    class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold"
-                    >4</td
-                  >
-                </tr>
+                {
+                  standings.map((driver, index) => (
+                    <tr
+                      class={
+                        index === 0
+                          ? 'bg-gradient-to-r from-gray-800/30 to-transparent hover:from-gray-800/50'
+                          : 'hover:bg-gray-800/30'
+                      }
+                    >
+                      <td class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold">
+                        {index + 1}
+                      </td>
+                      <td
+                        class={`px-2 py-3 border-b border-gray-700 ${getPositionClass(index + 1)}`}
+                      >
+                        {getPositionEmoji(index + 1)}
+                      </td>
+                      <td class="px-4 py-3 border-b border-gray-700">
+                        {driver.name}
+                      </td>
+                      <td class="px-4 py-3 border-b border-gray-700 text-gray-300 font-bold">
+                        {driver.points}
+                      </td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </table>
           </div>
