@@ -7,7 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch-standings": "npx tsx scripts/fetch-standings.ts",
+    "fetch-standings-excel-file": "npx tsx scripts/fetch-standings.ts",
+    "generate-standings-json": "npx tsx scripts/read-excel.ts",
     "fetch-iracing-data": "npx tsx --env-file=.env scripts/fetch-iracing-data.ts",
     "fetch-iracing-data-ci": "npx tsx scripts/fetch-iracing-data.ts"
   },
