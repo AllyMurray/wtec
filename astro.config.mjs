@@ -6,6 +6,6 @@ import tailwind from '@astrojs/tailwind';
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind()],
-  site: 'https://allymurray.github.io',
+  site: 'https://wtec.racing',
   base: '/',
 });
