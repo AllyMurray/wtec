@@ -7,5 +7,5 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   integrations: [tailwind()],
   site: 'https://allymurray.github.io',
-  base: '/wtec',
+  base: '/',
 });
