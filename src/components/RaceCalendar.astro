@@ -1,40 +1,16 @@
 ---
-import type { LeagueSeasonSession } from '../schemas/league-season-sessions';
+import { type Session } from '../schemas/league-season-sessions';
 import { DateTime } from 'luxon';
 import { formatDate, formatTime } from '../utils/date';
 import { getTrackInactiveUrl } from '../utils/tracks';
+import { splitSessionsByDate } from '../utils/sessions';
 
 interface Props {
-  sessions: LeagueSeasonSession[];
+  sessions: Session[];
 }
 
 const { sessions } = Astro.props;
-
-// Sort sessions by date
-const sortedSessions = [...sessions]
-  .filter(session => {
-    const date = DateTime.fromISO(session.launch_at).setZone('Europe/London');
-    return date.weekday === 4 && date.hour === 19 && date.minute === 0;
-  })
-  .sort(
-    (a, b) => new Date(a.launch_at).getTime() - new Date(b.launch_at).getTime()
-  );
-
-// Split into past and upcoming races
-const now = DateTime.now();
-const pastSessions = sortedSessions
-  .filter(s => DateTime.fromISO(s.launch_at) < now)
-  .sort(
-    (a, b) => new Date(b.launch_at).getTime() - new Date(a.launch_at).getTime()
-  );
-
-const upcomingSessions = sortedSessions.filter(
-  s => DateTime.fromISO(s.launch_at) >= now
-);
-
-function getTrackMapUrl(trackId: number) {
-  return `https://members-ng.iracing.com/track/map/${trackId}`;
-}
+const { pastSessions, upcomingSessions } = splitSessionsByDate(sessions);
 ---
 
 <div class="space-y-12">

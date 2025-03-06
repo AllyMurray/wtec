@@ -94,7 +94,7 @@ const HeatSessionInfo = z.object({
 });
 
 // Schema for individual session
-const Session = z.object({
+export const Session = z.object({
   cars: z.array(SessionCar),
   driver_changes: z.boolean(),
   entry_count: z.number(),
@@ -132,3 +132,7 @@ export const LeagueSeasonSessions = z.object({
   season_id: z.number(),
   league_id: z.number(),
 });
+
+// Type exports
+export type LeagueSeasonSessions = z.infer<typeof LeagueSeasonSessions>;
+export type Session = z.infer<typeof Session>;

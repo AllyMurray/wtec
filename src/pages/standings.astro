@@ -2,8 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import background from '../assets/background.svg';
 import standingsData from '../data/standings.json';
+import { sessions } from '../data/league-season-sessions.json';
+import { splitSessionsByDate } from '../utils/sessions';
 
 const { standings } = standingsData;
+const { pastSessions } = splitSessionsByDate(sessions);
+const currentRound = pastSessions.length;
 
 function getPositionEmoji(position: number): string {
   switch (position) {
@@ -51,7 +55,7 @@ function getPositionClass(position: number): string {
             Standings
           </h1>
           <div class="text-sm text-gray-400 text-center mb-6">
-            After Round 3
+            After Round {currentRound}
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left">
