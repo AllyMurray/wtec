@@ -23,6 +23,7 @@ const client = new IRacingClient({
 const wtecLeagueId = '7058';
 
 async function saveDataToFile(data: unknown, filename: string) {
+  console.log(`Saving data to file: ${filename}`);
   const dirPath = path.join(process.cwd(), 'src', 'data');
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
@@ -34,6 +35,7 @@ async function saveDataToFile(data: unknown, filename: string) {
 }
 
 function handleError(error: unknown) {
+  console.log('Handling error in operation');
   if (error instanceof z.ZodError) {
     console.error('Validation Error:', JSON.stringify(error.errors, null, 2));
   } else {
@@ -43,6 +45,7 @@ function handleError(error: unknown) {
 }
 
 async function fetchLeagueData() {
+  console.log('Fetching league data from iRacing API');
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/get', {
       league_id: wtecLeagueId,
@@ -59,6 +62,7 @@ async function fetchLeagueData() {
 }
 
 async function fetchLeagueSeasonData() {
+  console.log('Fetching league season data from iRacing API');
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/seasons', {
       league_id: wtecLeagueId,
@@ -74,6 +78,7 @@ async function fetchLeagueSeasonData() {
 }
 
 async function fetchLeagueSeasonSessionData() {
+  console.log('Fetching league season session data from iRacing API');
   try {
     const rawData = await client.makeAuthorizedRequest('/data/league/season_sessions', {
       league_id: wtecLeagueId,
@@ -91,6 +96,7 @@ async function fetchLeagueSeasonSessionData() {
 }
 
 async function fetchTrackAssets() {
+  console.log('Fetching track assets from iRacing API');
   try {
     const rawData = await client.makeAuthorizedRequest('/data/track/assets');
 
@@ -103,6 +109,7 @@ async function fetchTrackAssets() {
 }
 
 async function fetchMemberData(leagueData: z.infer<typeof League>) {
+  console.log('Fetching member data for all league members from iRacing API');
   try {
     // Extract customer IDs from the league data
     const customerIds = leagueData.roster.map((member: { cust_id: number }) => member.cust_id);
@@ -123,6 +130,7 @@ async function fetchMemberData(leagueData: z.infer<typeof League>) {
 }
 
 async function fetchSubsessionData(subsessionId: string) {
+  console.log(`Fetching subsession data for subsession ID: ${subsessionId}`);
   try {
     const rawData = await client.makeAuthorizedRequest('/data/results/get', {
       subsession_id: subsessionId,
@@ -147,6 +155,7 @@ async function fetchSubsessionData(subsessionId: string) {
 }
 
 async function fetchTracks() {
+  console.log('Fetching all tracks data from iRacing API');
   try {
     const rawData = await client.makeAuthorizedRequest('/data/track/get');
 
@@ -163,6 +172,7 @@ async function fetchTracks() {
 }
 
 async function fetchAllData() {
+  console.log('Starting complete data fetch operation from iRacing API');
   const leagueData = await fetchLeagueData();
   await fetchLeagueSeasonData();
   const seasonSessionData = await fetchLeagueSeasonSessionData();
