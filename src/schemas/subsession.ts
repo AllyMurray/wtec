@@ -201,13 +201,13 @@ export const Subsession = z.object({
   }),
   track_state: z.object({
     leave_marbles: z.boolean(),
-    practice_grip_compound: z.number(),
+    practice_grip_compound: z.number().optional(),
     practice_rubber: z.number(),
-    qualify_grip_compound: z.number(),
+    qualify_grip_compound: z.number().optional(),
     qualify_rubber: z.number(),
-    race_grip_compound: z.number(),
+    race_grip_compound: z.number().optional(),
     race_rubber: z.number(),
-    warmup_grip_compound: z.number(),
+    warmup_grip_compound: z.number().optional(),
     warmup_rubber: z.number(),
   }),
   weather: z.object({
