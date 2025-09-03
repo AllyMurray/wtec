@@ -53,11 +53,11 @@ jobs:
       - name: Generate standings JSON
         run: pnpm run generate-standings-json
 
-      - name: Fetch iRacing data
-        run: pnpm run fetch-iracing-data-ci
-        env:
-          EMAIL: ${{ vars.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+      # - name: Fetch iRacing data
+      #   run: pnpm run fetch-iracing-data-ci
+      #   env:
+      #     EMAIL: ${{ vars.EMAIL }}
+      #     PASSWORD: ${{ secrets.PASSWORD }}
 
       - name: Build site
         run: pnpm run build
